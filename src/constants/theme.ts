@@ -1,53 +1,398 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://unistyl.es/), etc.
- */
-
-import '@/global.css';
-
 import { Platform } from 'react-native';
 
-export const Colors = {
-  light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
+export type ThemePreset = 'cobalt' | 'emerald' | 'midnight' | 'amber';
+export type ThemeMode = 'system' | 'light' | 'dark';
+
+export interface ThemePresetMeta {
+  id: ThemePreset;
+  name: string;
+  description: string;
+  primaryColor: string;
+  accentColor: string;
+}
+
+export const THEME_PRESET_METAS: ThemePresetMeta[] = [
+  {
+    id: 'cobalt',
+    name: 'Cobalt Grid',
+    description: 'Electric blue & energy green tokens',
+    primaryColor: '#102B55',
+    accentColor: '#006D38',
   },
-  dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
+  {
+    id: 'emerald',
+    name: 'Emerald Eco',
+    description: 'Clean energy green & fresh mint',
+    primaryColor: '#064E3B',
+    accentColor: '#10B981',
+  },
+  {
+    id: 'midnight',
+    name: 'OLED Midnight',
+    description: 'Deep high-contrast space & cyan',
+    primaryColor: '#0B132B',
+    accentColor: '#38BDF8',
+  },
+  {
+    id: 'amber',
+    name: 'Solar Amber',
+    description: 'Warm photovoltaic gold & bronze',
+    primaryColor: '#78350F',
+    accentColor: '#F59E0B',
+  },
+];
+
+export const THEME_PALETTES: Record<ThemePreset, { light: any; dark: any }> = {
+  cobalt: {
+    light: {
+      primary: '#102B55',
+      secondary: '#006D38',
+      background: '#F9F9FF',
+      surface: '#F9F9FF',
+      surfaceDim: '#CDDAF9',
+      surfaceBright: '#F9F9FF',
+      surfaceContainerLowest: '#FFFFFF',
+      surfaceContainerLow: '#F1F3FF',
+      surfaceContainer: '#E8EEFF',
+      surfaceContainerHigh: '#E0E8FF',
+      surfaceContainerHighest: '#D7E2FF',
+      onSurface: '#0E1B32',
+      onSurfaceVariant: '#44474F',
+      textPrimary: '#102B55',
+      textSecondary: '#526580',
+      textMuted: '#87909F',
+      border: '#E5E7EB',
+      borderSubtle: '#F0F2F6',
+      card: '#FFFFFF',
+      navBackground: 'rgba(255, 255, 255, 0.95)',
+      tabActive: '#102B55',
+      tabInactive: '#87909F',
+      badgeBg: '#E8EEFF',
+      badgeText: '#44474F',
+      code: '#102B55',
+    },
+    dark: {
+      primary: '#AFC7FA',
+      secondary: '#7FFBA7',
+      background: '#0E1B32',
+      surface: '#0E1B32',
+      surfaceDim: '#081122',
+      surfaceBright: '#162846',
+      surfaceContainerLowest: '#101E38',
+      surfaceContainerLow: '#142544',
+      surfaceContainer: '#192E52',
+      surfaceContainerHigh: '#213B67',
+      surfaceContainerHighest: '#2B4B82',
+      onSurface: '#F9F9FF',
+      onSurfaceVariant: '#AFC7FA',
+      textPrimary: '#F9F9FF',
+      textSecondary: '#AFC7FA',
+      textMuted: '#7C93C3',
+      border: '#23375A',
+      borderSubtle: '#1A2A47',
+      card: '#101E38',
+      navBackground: 'rgba(16, 30, 56, 0.95)',
+      tabActive: '#7FFBA7',
+      tabInactive: '#7C93C3',
+      badgeBg: '#192E52',
+      badgeText: '#AFC7FA',
+      code: '#AFC7FA',
+    },
+  },
+  emerald: {
+    light: {
+      primary: '#064E3B',
+      secondary: '#059669',
+      background: '#F6FBF8',
+      surface: '#F6FBF8',
+      surfaceDim: '#D1E7DD',
+      surfaceBright: '#F6FBF8',
+      surfaceContainerLowest: '#FFFFFF',
+      surfaceContainerLow: '#EDF7F2',
+      surfaceContainer: '#E1F2E9',
+      surfaceContainerHigh: '#D3ECDE',
+      surfaceContainerHighest: '#C4E5D2',
+      onSurface: '#0B291E',
+      onSurfaceVariant: '#354E44',
+      textPrimary: '#064E3B',
+      textSecondary: '#356350',
+      textMuted: '#6C8A7B',
+      border: '#DDEAE2',
+      borderSubtle: '#EBF4EF',
+      card: '#FFFFFF',
+      navBackground: 'rgba(255, 255, 255, 0.95)',
+      tabActive: '#064E3B',
+      tabInactive: '#6C8A7B',
+      badgeBg: '#E1F2E9',
+      badgeText: '#064E3B',
+      code: '#064E3B',
+    },
+    dark: {
+      primary: '#6EE7B7',
+      secondary: '#34D399',
+      background: '#071A14',
+      surface: '#071A14',
+      surfaceDim: '#03100C',
+      surfaceBright: '#102E24',
+      surfaceContainerLowest: '#0A241C',
+      surfaceContainerLow: '#0E2E23',
+      surfaceContainer: '#13382B',
+      surfaceContainerHigh: '#1A4536',
+      surfaceContainerHighest: '#245644',
+      onSurface: '#F0FDF4',
+      onSurfaceVariant: '#A7F3D0',
+      textPrimary: '#F0FDF4',
+      textSecondary: '#A7F3D0',
+      textMuted: '#6EE7B7',
+      border: '#1E4A3B',
+      borderSubtle: '#14382C',
+      card: '#0A241C',
+      navBackground: 'rgba(10, 36, 28, 0.95)',
+      tabActive: '#34D399',
+      tabInactive: '#6EE7B7',
+      badgeBg: '#13382B',
+      badgeText: '#A7F3D0',
+      code: '#A7F3D0',
+    },
+  },
+  midnight: {
+    light: {
+      primary: '#0B132B',
+      secondary: '#0284C7',
+      background: '#F8FAFC',
+      surface: '#F8FAFC',
+      surfaceDim: '#CBD5E1',
+      surfaceBright: '#F8FAFC',
+      surfaceContainerLowest: '#FFFFFF',
+      surfaceContainerLow: '#F1F5F9',
+      surfaceContainer: '#E2E8F0',
+      surfaceContainerHigh: '#CBD5E1',
+      surfaceContainerHighest: '#94A3B8',
+      onSurface: '#0F172A',
+      onSurfaceVariant: '#334155',
+      textPrimary: '#0F172A',
+      textSecondary: '#475569',
+      textMuted: '#94A3B8',
+      border: '#E2E8F0',
+      borderSubtle: '#F1F5F9',
+      card: '#FFFFFF',
+      navBackground: 'rgba(255, 255, 255, 0.95)',
+      tabActive: '#0284C7',
+      tabInactive: '#94A3B8',
+      badgeBg: '#E2E8F0',
+      badgeText: '#0F172A',
+      code: '#0F172A',
+    },
+    dark: {
+      primary: '#38BDF8',
+      secondary: '#818CF8',
+      background: '#030712',
+      surface: '#030712',
+      surfaceDim: '#000000',
+      surfaceBright: '#111827',
+      surfaceContainerLowest: '#0A0F1D',
+      surfaceContainerLow: '#0F172A',
+      surfaceContainer: '#1E293B',
+      surfaceContainerHigh: '#334155',
+      surfaceContainerHighest: '#475569',
+      onSurface: '#F8FAFC',
+      onSurfaceVariant: '#94A3B8',
+      textPrimary: '#F8FAFC',
+      textSecondary: '#94A3B8',
+      textMuted: '#64748B',
+      border: '#1E293B',
+      borderSubtle: '#0F172A',
+      card: '#0A0F1D',
+      navBackground: 'rgba(10, 15, 29, 0.95)',
+      tabActive: '#38BDF8',
+      tabInactive: '#64748B',
+      badgeBg: '#1E293B',
+      badgeText: '#38BDF8',
+      code: '#38BDF8',
+    },
+  },
+  amber: {
+    light: {
+      primary: '#78350F',
+      secondary: '#D97706',
+      background: '#FFFDF9',
+      surface: '#FFFDF9',
+      surfaceDim: '#FDE68A',
+      surfaceBright: '#FFFDF9',
+      surfaceContainerLowest: '#FFFFFF',
+      surfaceContainerLow: '#FEF3C7',
+      surfaceContainer: '#FDE68A',
+      surfaceContainerHigh: '#FCD34D',
+      surfaceContainerHighest: '#FBBF24',
+      onSurface: '#451A03',
+      onSurfaceVariant: '#78350F',
+      textPrimary: '#451A03',
+      textSecondary: '#92400E',
+      textMuted: '#B45309',
+      border: '#FDE68A',
+      borderSubtle: '#FEF3C7',
+      card: '#FFFFFF',
+      navBackground: 'rgba(255, 255, 255, 0.95)',
+      tabActive: '#D97706',
+      tabInactive: '#B45309',
+      badgeBg: '#FEF3C7',
+      badgeText: '#78350F',
+      code: '#78350F',
+    },
+    dark: {
+      primary: '#FBBF24',
+      secondary: '#F59E0B',
+      background: '#1A120B',
+      surface: '#1A120B',
+      surfaceDim: '#100B06',
+      surfaceBright: '#291C10',
+      surfaceContainerLowest: '#23180E',
+      surfaceContainerLow: '#2E1F12',
+      surfaceContainer: '#3B2918',
+      surfaceContainerHigh: '#4C351F',
+      surfaceContainerHighest: '#5F4227',
+      onSurface: '#FEF3C7',
+      onSurfaceVariant: '#FDE68A',
+      textPrimary: '#FEF3C7',
+      textSecondary: '#FDE68A',
+      textMuted: '#F59E0B',
+      border: '#3B2918',
+      borderSubtle: '#2E1F12',
+      card: '#23180E',
+      navBackground: 'rgba(35, 24, 14, 0.95)',
+      tabActive: '#FBBF24',
+      tabInactive: '#92400E',
+      badgeBg: '#3B2918',
+      badgeText: '#FBBF24',
+      code: '#FBBF24',
+    },
+  },
+};
+
+export const WattWiseTheme = {
+  colors: {
+    // Brand Tokens
+    primary: '#102B55',
+    primaryDark: '#001638',
+    primaryFixed: '#D7E2FF',
+    primaryFixedDim: '#AFC7FA',
+    onPrimary: '#FFFFFF',
+    primaryContainer: '#102B55',
+    onPrimaryContainer: '#7C93C3',
+    inversePrimary: '#AFC7FA',
+
+    // Energy Green (Savings, efficiency, positive trends)
+    secondary: '#006D38',
+    energyGreen: '#35B66A',
+    secondaryFixed: '#7FFBA7',
+    secondaryFixedDim: '#62DE8D',
+    secondaryContainer: '#7FFBA7',
+    onSecondary: '#FFFFFF',
+    onSecondaryContainer: '#00743C',
+    onSecondaryFixed: '#00210D',
+
+    // Energy Yellow (Heatmaps, alerts, transmission)
+    tertiary: '#6C5E00',
+    energyYellow: '#E5C900',
+    tertiaryContainer: '#C3AB00',
+    tertiaryFixed: '#FFE33B',
+    tertiaryFixedDim: '#E2C600',
+    onTertiary: '#FFFFFF',
+    onTertiaryContainer: '#493F00',
+    onTertiaryFixed: '#211B00',
+
+    // Slate / Taxes & Universal
+    surfaceTint: '#475E8B',
+
+    // Semantic Status
+    error: '#BA1A1A',
+    errorContainer: '#FFDAD6',
+    onError: '#FFFFFF',
+    onErrorContainer: '#93000A',
+
+    // Light Theme Default
+    light: THEME_PALETTES.cobalt.light,
+
+    // Dark Theme Default
+    dark: THEME_PALETTES.cobalt.dark,
+  },
+
+  radius: {
+    xs: 4,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 20,
+    xxl: 24,
+    full: 9999,
+  },
+
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
+    xxl: 40,
+  },
+
+  shadows: {
+    level1: {
+      shadowColor: '#102B55',
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.05,
+      shadowRadius: 10,
+      elevation: 2,
+    },
+    level2: {
+      shadowColor: '#102B55',
+      shadowOffset: { width: 0, height: 8 },
+      shadowOpacity: 0.12,
+      shadowRadius: 20,
+      elevation: 6,
+    },
+    floating: {
+      shadowColor: '#102B55',
+      shadowOffset: { width: 0, height: 12 },
+      shadowOpacity: 0.22,
+      shadowRadius: 28,
+      elevation: 10,
+    },
   },
 } as const;
 
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
+// Backward compatibility with previous theme structure
+export const Colors = {
+  light: {
+    text: WattWiseTheme.colors.light.textPrimary,
+    background: WattWiseTheme.colors.light.background,
+    backgroundElement: WattWiseTheme.colors.light.surfaceContainerLow,
+    backgroundSelected: WattWiseTheme.colors.light.surfaceContainer,
+    textSecondary: WattWiseTheme.colors.light.textSecondary,
+  },
+  dark: {
+    text: WattWiseTheme.colors.dark.textPrimary,
+    background: WattWiseTheme.colors.dark.background,
+    backgroundElement: WattWiseTheme.colors.dark.surfaceContainerLow,
+    backgroundSelected: WattWiseTheme.colors.dark.surfaceContainer,
+    textSecondary: WattWiseTheme.colors.dark.textSecondary,
+  },
+} as const;
+
+export type ThemeColor = keyof typeof Colors.light;
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
+    sans: 'Inter, system-ui',
+    mono: 'ui-monospace, SFMono-Regular, Menlo, monospace',
   },
   default: {
     sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
     mono: 'monospace',
   },
   web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
+    sans: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    mono: 'ui-monospace, Menlo, Monaco, Consolas, monospace',
   },
 });
 
@@ -61,5 +406,5 @@ export const Spacing = {
   six: 64,
 } as const;
 
-export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
+export const BottomTabInset = Platform.select({ ios: 72, android: 80 }) ?? 72;
 export const MaxContentWidth = 800;

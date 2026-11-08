@@ -54,3 +54,11 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+can you make the register after registration it will go to the home page not in the profile.
+
+make the api request cleaner, simple and readable and also fix the notification because everytime i click it always get api request.
+
+fix the onboarding because the continue is not working.
+
